@@ -13,6 +13,16 @@ final class LocationViewController: UIViewController {
         label.font = .systemFont(ofSize: 17, weight: .medium)
         return label
     }()
+    private let locationButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "location.fill"), for: .normal)
+        return button
+    }()
+    private let refreshButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "arrow.clockwise"), for: .normal)
+        return button
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,20 +111,31 @@ extension LocationViewController {
     func configHierarchy() {
         [
             mapView,
-            loadingWeatherLabel
+            loadingWeatherLabel,
+            locationButton,
+            refreshButton
         ].forEach { view.addSubview($0) }
     }
     
     func configLayout() {
         mapView.snp.makeConstraints { make in
             make.horizontalEdges.top.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(300)
-//            make.bottom.equalTo(loadingWeatherLabel.snp.top)
+            make.height.equalTo(400)
         }
         
         loadingWeatherLabel.snp.makeConstraints { make in
             make.top.equalTo(mapView.snp.bottom).offset(16)
             make.centerX.equalToSuperview()
+        }
+        
+        locationButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.leading.equalTo(view.safeAreaLayoutGuide).offset(28)
+        }
+        
+        refreshButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-28)
         }
     }
     
